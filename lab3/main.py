@@ -652,8 +652,6 @@ def check_stepping(window):
         steps.append(count_step(window, line[0], line[1], line[2], line[3]))
         if steps[0] == False:
             showDialog()
-            #QMessageBox.critical(, "Ошибка", "ИДИ НАХУЙ")
-            #messagebox.showerror("Ошибка", "Данная операция невозможна для стандартного алгоритма")
             return
         line = line_start.copy()
         angle += 5

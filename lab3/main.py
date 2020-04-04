@@ -439,7 +439,7 @@ def alg_wu(window, x0, y0, xk, yk, draw, stepping):
                     max_len_x = temp_len_x
                 temp_len_x = 0
 
-            if fabs(prev_y - y) < EPS:
+            if fabs(prev_y - y) < EPS or fabs(prev_y - y - 1) < EPS:
                 temp_len_y += 1
             else:
                 if temp_len_y > max_len_y:
@@ -652,8 +652,6 @@ def check_stepping(window):
         steps.append(count_step(window, line[0], line[1], line[2], line[3]))
         if steps[0] == False:
             showDialog()
-            #QMessageBox.critical(, "Ошибка", "ИДИ НАХУЙ")
-            #messagebox.showerror("Ошибка", "Данная операция невозможна для стандартного алгоритма")
             return
         line = line_start.copy()
         angle += 5
@@ -672,4 +670,3 @@ def main():
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
     main()  # то запускаем функцию main()
-

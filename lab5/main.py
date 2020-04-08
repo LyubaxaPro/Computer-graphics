@@ -3,12 +3,13 @@ import tkinter.ttk as ttk
 from tkinter import messagebox
 from tkinter.colorchooser import askcolor
 from operator import itemgetter
+import time
 
 from funcs import *
 
 
 # Main window class
-class Kg5App(tk.Tk):
+class Application(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self)
 
@@ -16,8 +17,6 @@ class Kg5App(tk.Tk):
             if self.ctrl_pressed == 0:
                 add(self, event.x, event.y)
             else:
-                print('3')
-                print(self.figs, self.fig_n)
                 if len(self.figs) > self.fig_n:
                     x_prev = self.figs[self.fig_n][-1][0]
                     y_prev = self.figs[self.fig_n][-1][1]
@@ -33,8 +32,6 @@ class Kg5App(tk.Tk):
                     add(self, event.x, event.y)
 
         def click_end(event):
-            print("click_end")
-            print(self.figs, self.fig_n)
             if len(self.figs) > self.fig_n:
                 if len(self.figs[self.fig_n]) <= 2:
                     clear(self, "tag" + str(self.fig_n))
@@ -63,7 +60,6 @@ class Kg5App(tk.Tk):
                 else:
                     x_prev = self.figs[self.fig_n][-1][0]
                     y_prev = self.figs[self.fig_n][-1][1]
-                    print("prev", x_prev, y_prev)
 
                     x = event.x - x_prev
                     y = event.y - y_prev
@@ -195,9 +191,17 @@ class Kg5App(tk.Tk):
         self.canvas.bind("<Motion>", moving_line)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+def show_time_window(time):
+    window = tk.Tk()
+    window.title("Время работы алгоритма")
+    window.geometry('500x30')
+    lbl = tk.Label(window, text=str(round(time, 6)) + " секунд", font=18)
+    lbl.grid(column=0, row=0)
+    window.mainloop()
 
 # Calls functions for filling polygon
 def fill(self):
+    start_time = time.clock()
     self.edges = get_edges(self.figs)
     if len(self.edges) < 3:
         mes("Недостаточно ребер")
@@ -218,6 +222,8 @@ def fill(self):
     else:
         fill_figure(self, intersections)
         draw_edges(self)
+    stop_time = time.clock()
+    show_time_window(stop_time - start_time)
 
 
 # Picks color
@@ -303,5 +309,5 @@ def clear(self, obj):
 
 
 if __name__ == '__main__':
-    app = Kg5App(1000, 600)
+    app = Application(1000, 600)
     app.mainloop()

@@ -9,9 +9,6 @@ def get_edges(dots_mas):
             else:
                 edges.append([dots[i], dots[i + 1]])
 
-    # faster:
-    #edges = [[dots_mas[i][j], dots_mas[i][0]] if j + 1 > len(dots_mas[i]) - 1 else [dots_mas[i][j], dots_mas[i][j + 1]] for i in range(len(dots_mas)) for j in range(len(dots_mas[i]))]
-
     return edges
 
 
